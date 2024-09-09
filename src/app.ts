@@ -10,11 +10,12 @@ export const client = new Client({
 
 client.once("ready", () => {
     console.log("Betz bot is live!");
-});
 
-client.on("guildCreate", async (guild) => {
-    console.log(`Joined guild: ${guild.name}`);
-    await deployCommands({ guildId: guild.id });
+    // Get list of guides from the client cache
+    const guilds = client.guilds.cache;
+    guilds.forEach(async (guild) => {
+        await deployCommands({ guildId: guild.id });
+    });
 });
 
 client.on("interactionCreate", async (interaction) => {
